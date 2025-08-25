@@ -1,0 +1,565 @@
+/* الخطوط والإعدادات الأساسية */
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap");
+
+:root {
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --text-dark: #1a202c;
+  --text-medium: #4a5568;
+  --border-color: #e2e8f0;
+  --white: #ffffff;
+  --border-radius-sm: 4px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Cairo", sans-serif;
+  background: var(--white);
+  line-height: 1.2;
+  font-size: 16px;
+  color: var(--text-dark);
+}
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+  color: var(--white);
+  padding: 10px 15px;
+  text-align: center;
+}
+
+.logo-placeholder {
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  margin: 0 auto 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.logo-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.header h1 {
+  font-size: 1.4em;
+  font-weight: 700;
+  margin-bottom: 3px;
+  letter-spacing: 0.5px;
+}
+
+.header .subtitle {
+  font-size: 0.8em;
+  opacity: 0.95;
+}
+
+/* Content */
+.content {
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Form Elements */
+.field {
+  margin-bottom: 15px;
+}
+.field-label {
+  display: block;
+  color: var(--text-medium);
+  font-weight: 600;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+}
+
+/* Form Controls */
+.form-control,
+input:not([type="checkbox"], [type="radio"]),
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font: inherit;
+  font-size: 0.95em;
+  transition: all 0.2s ease;
+  background: #fff;
+  color: var(--text-dark);
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+  box-shadow: 0 0 0 1000px #fff inset !important;
+  -webkit-text-fill-color: var(--text-dark) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.form-control:focus,
+input:not([type="checkbox"], [type="radio"]):focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.section-title {
+  color: var(--primary-color);
+  font: 600 1.2em "Cairo", sans-serif;
+  margin: 0 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f2f5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title::before {
+  content: "●";
+  color: var(--secondary-color);
+}
+
+/* Field Groups */
+.field-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.field-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: var(--text-medium);
+}
+
+.field-group input,
+.field-group select,
+.field-group textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font: 0.95em "Cairo", sans-serif;
+  transition: all 0.2s ease;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font: 600 1em "Cairo", sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+.btn-primary:hover {
+  background: #4a6cf7;
+  transform: translateY(-1px);
+}
+.btn-secondary {
+  background: #e2e8f0;
+  color: #4a5568;
+}
+
+/* Form sections */
+.form-section {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+  padding: 25px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  border-top: 4px solid var(--primary-color);
+}
+
+.items-section .field-label {
+  margin-bottom: 0px;
+}
+
+.items-section .form-control {
+  height: 100%;
+}
+
+.section-header {
+  margin-bottom: 20px;
+}
+
+/* Items list container */
+.items-list {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f7fafc;
+}
+
+.items-list::-webkit-scrollbar {
+  height: 6px;
+}
+
+.items-list::-webkit-scrollbar-track {
+  background: #f7fafc;
+}
+
+.items-list::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0;
+  border-radius: 3px;
+}
+
+.item-row {
+  display: flex;
+  padding: 15px 12px;
+  margin: 8px 0;
+  border-radius: 6px;
+  background-color: #fff;
+  border: 1px solid #edf2f7;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.item-row:hover {
+  background-color: #f8fafc;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border-color: #e2e8f0;
+}
+
+/* Header row styles */
+.item-row.header-row {
+  background-color: #f1f5f9;
+  font-weight: 600;
+  color: #334155;
+  border-bottom: 2px solid #e2e8f0;
+  padding: 14px 8px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Item field styles */
+.item-field {
+  flex: 1;
+  min-width: 0;
+  padding: 0 2px;
+  transition: all 0.2s ease;
+}
+
+/* Specific field widths */
+.item-field[data-label="الكمية"],
+.item-field[data-label="الحالة"] {
+  flex: 0 0 120px;
+  max-width: 120px;
+}
+
+.item-field[data-label="إجراءات"] {
+  flex: 0 0 100px;
+  max-width: 100px;
+}
+
+.item-field[data-label="وصف المنتج"] {
+  flex: 2;
+  min-width: 200px;
+}
+
+.item-field[data-label="ملاحظات"] {
+  flex: 3;
+  min-width: 150px;
+}
+
+.item-row .item-field:last-child {
+  margin-right: 10px;
+  margin-top: 23px;
+}
+
+/* ============================================
+Responsive Styles
+============================================ */
+
+/* Tablets and below (768px and below) */
+@media (max-width: 768px) {
+  /* Form sections */
+  .form-section {
+    padding: 15px;
+    margin: 0 10px 20px;
+    border-radius: 8px;
+  }
+
+  /* Item rows */
+  .item-row {
+    display: block;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+
+  .item-row.header-row {
+    display: none;
+  }
+
+  .item-row .item-field {
+    width: 100% !important;
+    margin-bottom: 10px;
+  }
+
+  .item-row .item-field:last-child {
+    margin-top: 10px;
+    margin-right: 0;
+    text-align: center;
+  }
+
+  /* Signature section */
+  .signature-section {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .field {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+/* Mobile devices (480px and below) */
+@media (max-width: 480px) {
+  .form-section {
+    padding: 12px;
+    margin: 0 5px 15px;
+    border-radius: 6px;
+  }
+
+  /* Form controls */
+  .form-control {
+    font-size: 16px; /* Prevents iOS zoom */
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 10px 16px;
+    min-height: 44px; /* Minimum touch target size */
+  }
+
+  /* Signature boxes */
+  .signature-box {
+    min-width: 100%;
+    margin: 5px 0;
+  }
+}
+
+.section-title {
+  color: var(--primary-color);
+  border-bottom: 2px solid #f0f2f5;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title i {
+  font-size: 1.2em;
+}
+
+/* قسم التوقيعات */
+.signature-area {
+  page-break-before: always;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+  padding: 25px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  border-top: 4px solid var(--primary-color);
+}
+
+.signature-container {
+  width: 100%;
+  margin: 15px auto 0;
+  max-width: 100%;
+}
+
+.signature-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 30px;
+  margin: 0 -10px;
+}
+
+.signature-col {
+  flex: 1;
+  min-width: 0;
+  padding: 0 10px;
+}
+
+.signature-box {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  background: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.signature-field {
+  height: 60px;
+  border: 1px solid #ddd;
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9f9f9;
+  border-radius: 4px;
+  position: relative;
+}
+
+.signature-placeholder {
+  color: #666;
+  font-size: 14px;
+  padding: 5px;
+  font-weight: 500;
+}
+
+.signature-name {
+  font-size: 12px;
+  text-align: center;
+  margin: 5px 0 0;
+  color: #333;
+  border-top: 1px dashed #ddd;
+  padding-top: 8px;
+}
+
+.signature-name span {
+  display: block;
+  white-space: nowrap;
+  padding: 2px 0;
+  text-align: right;
+  direction: rtl;
+  margin-right: 10px;
+}
+
+.date-field {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .signature-section {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .signature-box {
+    margin-bottom: 10px;
+  }
+
+  .signature-line {
+    margin: 30px 0 8px;
+  }
+}
+
+.signature-title {
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 6px;
+}
+
+.signature-line {
+  flex-grow: 1;
+  min-height: 60px;
+  margin: 10px 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.date-field {
+  margin-top: 6px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  text-align: center;
+  font-family: inherit;
+}
+
+/* منطقة التذييل */
+.footer {
+  background: var(--background-light);
+  padding: 8px 15px;
+  text-align: center;
+  color: var(--text-light);
+  border-top: 1px solid var(--border-color);
+}
+
+.print-header {
+  display: none;
+}

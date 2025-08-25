@@ -1,0 +1,469 @@
+/* ============================================
+   Print Styles - Mirror Screen Layout
+============================================ */
+@media print {
+  /* --- Page Setup --- */
+  @page {
+    size: A4;
+    margin: 0.3cm; /* Reduced margins */
+    size: 210mm 297mm; /* Explicit A4 dimensions */
+    padding: 0;
+  }
+  /* --- General Adjustments for Print --- */
+  body {
+    background-color: #fff !important; /* Ensure white background */
+    -webkit-print-color-adjust: exact !important; /* For Chrome/Safari */
+    print-color-adjust: exact !important; /* Standard property */
+  }
+
+  .container {
+    box-shadow: none !important; /* Remove shadow for printing */
+    border: none !important; /* Remove border for printing */
+  }
+
+  .form-section {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    padding: 4px !important;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-top: 2px solid var(--primary-color);
+    margin-bottom: 4px !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    font-size: 0.9em;
+    line-height: 1.2;
+  }
+
+  /* Ensure form inputs don't have a transparent background */
+  .form-control {
+    background-color: #fff !important;
+  }
+
+  /* Print header styles */
+  .print-header {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 6px 0;
+    padding: 3px 0 4px 0;
+    border-bottom: 1px solid #333;
+    page-break-after: avoid;
+  }
+
+  .section-title {
+    margin: 0 0 6px 0;
+    padding: 0 0 3px 0;
+    color: #1565c0;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 1px solid #e3f2fd;
+    page-break-after: avoid;
+  }
+
+  .print-header .logo-placeholder {
+    flex: 0 0 auto;
+    padding: 0 15px;
+  }
+
+  .print-header .logo-placeholder img {
+    max-height: 70px;
+    width: auto;
+    max-width: 120px;
+    object-fit: contain;
+  }
+
+  .print-header .header-text {
+    text-align: center;
+    flex-grow: 1;
+    padding: 0 15px;
+  }
+
+  .print-header .school-name {
+    font-family: "Arial", sans-serif;
+    font-size: 14pt;
+    font-weight: bold;
+    color: #000;
+    margin: 0 0 2px 0;
+    line-height: 1.1;
+  }
+
+  .print-header h1 {
+    font-family: "Arial", sans-serif;
+    font-size: 14pt;
+    color: #333;
+    margin: 10px 0 0 0;
+    padding: 0;
+    font-weight: normal;
+    border-bottom: none;
+  }
+
+  /* --- Items Container --- */
+  .items-section {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+    padding: 25px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border-top: 4px solid var(--primary-color);
+  }
+
+  .items-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .items-list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 9pt;
+    border: none;
+  }
+
+  /* Remove page breaks between items */
+  .items-list .item-row {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Hide action buttons and other non-essential elements when printing */
+  .item-actions,
+  .action-buttons,
+  .btn,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Ensure proper spacing and borders */
+  .item-row:not(.header) {
+    border-bottom: 1px solid #eee;
+  }
+
+  /* Adjust field labels for print */
+  .item-field[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: bold;
+    font-size: 9pt;
+    color: #666;
+    margin-bottom: 2px;
+  }
+
+  /* Hide all header rows and labels in print */
+  .item-row.header,
+  .item-field label,
+  .header-row,
+  .item-field[data-label]::before {
+    display: none !important;
+  }
+
+  .item-row {
+    display: grid !important;
+    grid-template-columns: 2.5fr 0.8fr 1.2fr 2.5fr;
+    border: 1px solid #2196f3 !important; /* Blue border around each row */
+    border-radius: 4px;
+    margin: 0 0 4px 0; /* Reduced space between rows */
+    width: 100%;
+    padding: 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    min-height: 30px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+
+  .item-row:last-child {
+    border-bottom: none;
+  }
+
+  .item-row.header,
+  .items-list .item-row:first-child {
+    font-weight: bold;
+    background-color: #f5f5f5;
+    text-align: center;
+  }
+
+  .item-field {
+    padding: 1px 3px; /* Reduced padding */
+    font-size: 8.5pt; /* Slightly smaller font */
+    word-break: break-word;
+    line-height: 1.2; /* Tighter line height */
+  }
+
+  .item-field:last-child {
+    border-right: none !important; /* Remove right border for last cell */
+  }
+
+  /* Remove outer borders from the container */
+  .items-list {
+    border: none !important;
+  }
+
+  .item-field .form-control {
+    width: 100%;
+    box-sizing: border-box;
+    line-height: 1.3;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .items-list .item-row:first-child .item-field label {
+    display: block !important;
+    visibility: visible !important;
+    margin-bottom: 0;
+  }
+
+  /* Hide labels in data rows */
+  .items-list .item-row:not(:first-child) .item-field label {
+    display: none !important;
+  }
+
+  /* Ensure inputs in the table look clean */
+  /* Items Section - Print Styles */
+  .items-section {
+    page-break-inside: avoid;
+    margin: 15px 0;
+  }
+
+  .items-list {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    page-break-inside: auto;
+  }
+
+  .item-row {
+    display: grid;
+    grid-template-columns: 2.5fr 0.8fr 1.2fr 2.5fr;
+    gap: 6px; /* Reduced gap */
+    padding: 3px 0; /* Reduced padding */
+    align-items: center;
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  .item-row.header {
+    font-weight: bold;
+    background-color: #f5f5f5 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border-bottom: 2px solid #ddd;
+    padding: 8px 0;
+  }
+
+  .item-field {
+    padding: 1px 3px; /* Reduced padding */
+    font-size: 8.5pt; /* Slightly smaller font */
+    word-break: break-word;
+    line-height: 1.2; /* Tighter line height */
+  }
+
+  .items-list .form-control {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 8pt !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    background: transparent !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    box-sizing: border-box;
+    line-height: 1.1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Adjust item rows for printing */
+  /* More compact row styling */
+  .item-row {
+    display: flex !important;
+    width: 100%;
+    margin: 2px 0 !important;
+    padding: 2px 0 !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    align-items: flex-start;
+  }
+
+  /* Field styling */
+  .item-field {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 4px 6px;
+    font-size: 9pt;
+    word-break: break-word;
+    border-right: 1px solid #e0e0e0 !important;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    white-space: normal;
+    font-size: 10pt;
+    line-height: 1.2;
+  }
+
+  /* Field width distribution */
+  .item-field:first-child {
+    /* وصف المنتج */
+    flex: 3 1 40%;
+  }
+
+  .item-field[data-label="الكمية"] {
+    /* الكمية */
+    flex: 0 0 50px;
+    text-align: center;
+  }
+
+  .item-field[data-label="الحالة"] {
+    /* الحالة */
+    flex: 0 0 60px;
+    text-align: center;
+  }
+
+  .item-field:not(:first-child):not(:last-child):not([data-label="الكمية"]):not(
+      [data-label="الحالة"]
+    ) {
+    /* الملاحظات */
+    flex: 2 1 30%;
+  }
+
+  /* Compact form sections */
+
+  /* Compact form fields */
+  .field-group {
+    margin-bottom: 4px !important;
+  }
+
+  /* Ensure forms don't break across pages */
+  form {
+    page-break-inside: avoid;
+  }
+
+  /* Hide actions column */
+  .item-field:last-child,
+  .action-buttons,
+  .remove-item {
+    display: none !important;
+  }
+
+  /* Adjust header and titles */
+  .section-title {
+    margin: 4px 0 !important;
+    padding-bottom: 2px !important;
+  }
+
+  /* Reduce vertical spacing in form controls */
+  .form-control {
+    padding: 1px 2px !important;
+    margin: 0 !important;
+    min-height: auto !important;
+  }
+}
+
+/* Signature section styles - Print */
+.signature-area {
+  page-break-before: auto;
+  padding: 0.3cm;
+  margin: 0.5cm 0 0;
+}
+
+.signature-container {
+  width: 100%;
+  margin: 20px auto 0;
+}
+
+.signature-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between;
+  page-break-inside: avoid;
+  gap: 40px;
+  margin: 0 -15px;
+}
+
+.signature-col {
+  flex: 1;
+  min-width: 0;
+  padding: 0 15px;
+  page-break-inside: avoid;
+}
+
+.signature-box {
+  border: 1px solid #555;
+  padding: 8px 6px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  page-break-inside: avoid;
+}
+
+.signature-field {
+  height: 50px;
+  border: 1px solid #555;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  position: relative;
+  flex-grow: 1;
+}
+
+.signature-placeholder {
+  color: #000;
+  font-size: 10pt;
+  font-weight: bold;
+}
+
+.signature-name {
+  font-size: 10pt;
+  text-align: right;
+  margin: 10px 0 0;
+  color: #555;
+  border-top: 1px solid #555;
+  padding-top: 8px;
+}
+
+.signature-name span {
+  display: block;
+  white-space: nowrap;
+  padding: 2px 0;
+  text-align: right;
+  direction: rtl;
+}
+
+/* Keep sections together */
+.signature-area h2,
+.section h2 {
+  page-break-after: avoid;
+}
+
+.signature-area,
+.section {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* --- Hide elements not needed for print --- */
+.header, /* Hide original screen header */
+  .subtitle,
+  .action-buttons, /* Hide main action buttons */
+  .remove-item, /* Hide the 'remove' button for each item */
+  #addItemBtn,
+  .header-row /* Hide the 'add item' button */ {
+  display: none !important;
+}
