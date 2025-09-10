@@ -131,12 +131,6 @@
     border: none;
   }
 
-  /* Remove page breaks between items */
-  .items-list .item-row {
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-
   /* Hide action buttons and other non-essential elements when printing */
   .item-actions,
   .action-buttons,
@@ -234,24 +228,32 @@
   /* Items Section - Print Styles */
   .items-section {
     page-break-inside: avoid;
-    margin: 15px 0;
+    margin: 10px 0;
   }
 
   .items-list {
     width: 100%;
     border-collapse: collapse;
-    margin: 10px 0;
+    margin: 5px 0;
     page-break-inside: auto;
   }
 
   .item-row {
     display: grid;
     grid-template-columns: 2.5fr 0.8fr 1.2fr 2.5fr;
-    gap: 6px; /* Reduced gap */
-    padding: 3px 0; /* Reduced padding */
-    align-items: center;
+    gap: 4px;
+    padding: 2px 0;
+    margin: 0;
     page-break-inside: avoid;
-    page-break-after: auto;
+    break-inside: avoid;
+  }
+
+  /* Page break after 10th item, but only if there are at least 3 items */
+.item-row:nth-child(5)::after {
+    content: "";
+    display: block;
+    page-break-after: always;
+    break-after: page;
   }
 
   .item-row.header {
@@ -288,16 +290,6 @@
   }
 
   /* Adjust item rows for printing */
-  /* More compact row styling */
-  .item-row {
-    display: flex !important;
-    width: 100%;
-    margin: 2px 0 !important;
-    padding: 2px 0 !important;
-    page-break-inside: avoid;
-    break-inside: avoid;
-    align-items: flex-start;
-  }
 
   /* Field styling */
   .item-field {
@@ -340,16 +332,9 @@
     flex: 2 1 30%;
   }
 
-  /* Compact form sections */
-
   /* Compact form fields */
   .field-group {
     margin-bottom: 4px !important;
-  }
-
-  /* Ensure forms don't break across pages */
-  form {
-    page-break-inside: avoid;
   }
 
   /* Hide actions column */
@@ -398,7 +383,6 @@
   flex: 1;
   min-width: 0;
   padding: 0 15px;
-  page-break-inside: avoid;
 }
 
 .signature-box {
@@ -408,7 +392,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  page-break-inside: avoid;
 }
 
 .signature-field {
@@ -444,18 +427,6 @@
   padding: 2px 0;
   text-align: right;
   direction: rtl;
-}
-
-/* Keep sections together */
-.signature-area h2,
-.section h2 {
-  page-break-after: avoid;
-}
-
-.signature-area,
-.section {
-  page-break-inside: avoid;
-  break-inside: avoid;
 }
 
 /* --- Hide elements not needed for print --- */

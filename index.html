@@ -40,7 +40,7 @@
             <i class="fas fa-user-tie"></i>
             بيانات المرسل
           </h2>
-          <div class="field-group">
+          <form class="field-group" autocomplete="on">
             <div class="field">
               <label class="field-label">اسم المرسل</label>
               <input
@@ -63,7 +63,7 @@
                 required
               />
             </div>
-          </div>
+          </form>
         </section>
 
         <!-- Receiving Information -->
@@ -72,7 +72,7 @@
             <i class="fas fa-clipboard-check"></i>
             بيانات الاستلام
           </h2>
-          <div class="field-group">
+          <form class="field-group" autocomplete="on">
             <div class="field">
               <label class="field-label">اسم المستلم</label>
               <input
@@ -95,8 +95,8 @@
                 required
               />
             </div>
-          </div>
-          <div class="field-group">
+          </form>
+          <form class="field-group" autocomplete="on">
             <div class="field" style="flex: 2">
               <label class="field-label">موقع التسليم</label>
               <input
@@ -128,7 +128,7 @@
                 required
               />
             </div>
-          </div>
+          </form>
           <div class="field">
             <label class="field-label">ملاحظات إضافية</label>
             <textarea
@@ -147,10 +147,6 @@
               <i class="fas fa-boxes"></i>
               تفاصيل البضاعة المستلمة
             </h2>
-            <button type="button" class="btn btn-primary" id="addItemBtn">
-              <i class="fas fa-plus"></i>
-              إضافة صنف
-            </button>
           </div>
 
           <form id="receiptForm" class="needs-validation" novalidate>
@@ -163,119 +159,20 @@
                   <div class="item-field">ملاحظات</div>
                   <div class="item-field">إجراءات</div>
                 </div>
-                <div class="item-row" data-item-id="1">
-                  <div class="item-field">
-                    <input
-                      type="text"
-                      id="item-desc-1"
-                      class="form-control"
-                      name="items[0][description]"
-                      required
-                      maxlength="100"
-                      pattern=".{3,}"
-                      title="يجب إدخال وصف المنتج (3 أحرف على الأقل)"
-                      placeholder="وصف المنتج"
-                    />
-                  </div>
-                  <div class="item-field">
-                    <label for="item-qty-1" class="field-label">الكمية</label>
-                    <input
-                      type="number"
-                      id="item-qty-1"
-                      class="form-control"
-                      value="1"
-                      min="1"
-                      max="9999"
-                      name="items[0][quantity]"
-                      required
-                      title="يجب إدخال كمية صحيحة"
-                    />
-                  </div>
-                  <div class="item-field">
-                    <label for="item-condition-1" class="field-label">الحالة</label>
-                    <select 
-                      id="item-condition-1"
-                      class="form-control item-condition" 
-                      name="items[0][condition]" 
-                      required
-                      title="يجب اختيار حالة المنتج"
-                    >
-                      <option value="">اختر الحالة</option>
-                      <option value="جديدة" selected>جديدة</option>
-                      <option value="مستعملة">مستعملة</option>
-                      <option value="تالفة">تالفة</option>
-                      <option value="ناقصة">ناقصة</option>
-                    </select>
-                  </div>
-                  <div class="item-field">
-                    <input
-                      type="text"
-                      id="item-notes-1"
-                      class="form-control"
-                      name="items[0][notes]"
-                      maxlength="255"
-                    />
-                  </div>
-                  <div class="item-field">
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-danger remove-item"
-                      title="حذف"
-                      aria-label="حذف المنتج"
-                      data-item-id="1"
-                    >
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="item-field">
-                  <label for="item-condition-1" class="field-label">الحالة</label>
-                  <select 
-                    id="item-condition-1"
-                    class="form-control item-condition" 
-                    name="items[0][condition]" 
-                    required
-                    title="يجب اختيار حالة المنتج"
-                  >
-                    <option value="">اختر الحالة</option>
-                    <option value="جديدة" selected>جديدة</option>
-                    <option value="مستعملة">مستعملة</option>
-                    <option value="تالفة">تالفة</option>
-                    <option value="ناقصة">ناقصة</option>
-                  </select>
-                </div>
-                <div class="item-field">
-                  <label for="item-notes-1" class="field-label">ملاحظات</label>
-                  <input
-                    type="text"
-                    id="item-notes-1"تاريخ الاستلام
-
-                    class="form-control"
-                    name="items[0][notes]"
-                    maxlength="255"
-                  />
-                </div>
-                <div class="item-field">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-danger remove-item"
-                    title="حذف"
-                    aria-label="حذف المنتج"
-                    data-item-id="1"
-                  >
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
               </div>
             </div>
             <div class="action-buttons">
-            <button type="button" class="btn btn-secondary" id="resetForm">
-              <i class="fas fa-undo"></i>
-              إعادة تعيين
-            </button>
+              <button type="button" class="btn btn-primary" id="addItemBtn">
+                <i class="fas fa-plus"></i>
+                إضافة صنف
+              </button>
             <button type="button" class="btn btn-primary" id="saveForm">
               <i class="fas fa-save"></i>
               حفظ النموذج
+            </button>
+            <button type="button" class="btn btn-secondary" id="resetForm">
+              <i class="fas fa-undo"></i>
+              إعادة تعيين
             </button>
             <button type="button" class="btn btn-primary print-button" id="printForm">
               <i class="fas fa-print"></i>
@@ -310,25 +207,21 @@
                 </div>
               </div>
             </div>
+            <!-- التذييل -->
+            <div class="footer">
+              <p>
+                <span>هذا النموذج معتمد رسمياً لتوثيق عمليات استلام البضائع •</span>
+                <span>Ahmed Shehata Web Developer © 2025</span>
+              </p>
+            </div>
           </div>
         </section>
       </main>
-
-      <!-- التذييل -->
-      <footer class="footer">
-        <p>
-          <span>هذا النموذج معتمد رسمياً لتوثيق عمليات استلام البضائع •</span>
-          <span>Ahmed Shehata Web Developer © 2025</span>
-        </p>
-      </footer>
     </div>
     <script src="new-script.js" defer></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        if (typeof ReceiptForm !== 'undefined') {
-          ReceiptForm.init();
-        }
-      });
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+    
     </script>
   </body>
 </html>

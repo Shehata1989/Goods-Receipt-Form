@@ -29,6 +29,69 @@ body {
   max-width: 100%;
   margin: 0 auto;
   overflow: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Toast Notification */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 100%;
+  max-width: 350px;
+  pointer-events: none;
+}
+
+.toast {
+  background-color: #4caf50;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: auto;
+  font-family: "Cairo", sans-serif;
+  text-align: right;
+  direction: rtl;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast.error {
+  background-color: #f44336;
+}
+
+.toast .toast-message {
+  flex-grow: 1;
+  margin: 0 16px 0 0;
+}
+
+.toast .close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 0 0 10px;
+  line-height: 1;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.toast .close-btn:hover {
+  opacity: 1;
 }
 
 /* Header */
@@ -554,10 +617,14 @@ Responsive Styles
 /* منطقة التذييل */
 .footer {
   background: var(--background-light);
-  padding: 8px 15px;
+  padding-top: 15px;
   text-align: center;
   color: var(--text-light);
   border-top: 1px solid var(--border-color);
+}
+
+.footer span {
+  font-size: 14px;
 }
 
 .print-header {

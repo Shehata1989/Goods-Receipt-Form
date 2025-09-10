@@ -2,7 +2,138 @@
 const ReceiptForm = (function () {
   // DOM Elements
   let itemsList, addItemBtn, receiptForm;
-  let itemCounter = 1;
+  let itemCounter = 0;
+
+  // Show toast notification
+  function showToast(message, isError = false) {
+    const toastContainer = document.getElementById("toastContainer");
+    if (!toastContainer) return;
+
+    const toast = document.createElement("div");
+    toast.className = `toast ${isError ? "error" : ""}`;
+    toast.innerHTML = `
+      <div class="toast-message">${message}</div>
+      <button class="close-btn" aria-label="إغلاق">&times;</button>
+    `;
+
+    // Add to container and show
+    toastContainer.appendChild(toast);
+    // Force reflow to trigger animation
+    void toast.offsetWidth;
+    toast.classList.add("show");
+
+    // Auto remove after delay
+    const autoRemove = setTimeout(() => {
+      toast.classList.remove("show");
+      setTimeout(() => toast.remove(), 300); // Wait for animation to complete
+    }, 2000);
+
+    // Close button handler
+    const closeBtn = toast.querySelector(".close-btn");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        clearTimeout(autoRemove);
+        toast.classList.remove("show");
+        setTimeout(() => toast.remove(), 300);
+      });
+    }
+  }
+
+  // Save all form data to localStorage
+  function saveFormData() {
+    if (!receiptForm) return;
+
+    const data = {
+      // Sender Information
+      sender: {
+        name: document.querySelector('[name="supplierName"]')?.value || "",
+        location: document.querySelector('[name="supplierPhone"]')?.value || "",
+      },
+      // Receiver Information
+      receiver: {
+        name: document.querySelector('[name="receiverName"]')?.value || "",
+        department:
+          document.querySelector('[name="receiverDepartment"]')?.value || "",
+      },
+      // Delivery Information
+      delivery: {
+        location:
+          document.querySelector('[name="deliveryLocation"]')?.value || "",
+        date: document.querySelector('[name="deliveryDate"]')?.value || "",
+        time: document.querySelector('[name="deliveryTime"]')?.value || "",
+      },
+      // Additional Notes
+      notes: document.querySelector('[name="additionalNotes"]')?.value || "",
+      // Items List
+      items: [],
+    };
+
+    // Get all items
+    const items = [];
+    document.querySelectorAll(".item-row:not(.header-row)").forEach((row) => {
+      const desc = row.querySelector('[name$="[description]"]')?.value?.trim();
+      const quantity =
+        row.querySelector('[name$="[quantity]"]')?.value?.trim() || "1";
+      const condition =
+        row.querySelector('[name$="[condition]"]')?.value?.trim() || "";
+      const notes = row.querySelector('[name$="[notes]"]')?.value?.trim() || "";
+
+      // Only add the item if it has a description or notes
+      if (desc) {
+        const item = {
+          description: desc,
+        };
+
+        // Only add quantity if it's not empty or not "1"
+        if (quantity && quantity !== "1") {
+          item.quantity = quantity;
+        } else {
+          item.quantity = "1";
+        }
+
+        // Only add condition if it's not empty
+        if (condition) {
+          item.condition = condition;
+        }
+
+        // Only add notes if it's not empty
+        if (notes) {
+          item.notes = notes;
+        }
+
+        items.push(item);
+      }
+    });
+
+    // Only save items if there are any
+    if (items.length > 0) {
+      data.items = items;
+    }
+
+    // Only save to localStorage if there's actual data
+    if (
+      data.items.length > 0 ||
+      data.sender.name ||
+      data.sender.location ||
+      data.receiver.name ||
+      data.receiver.department ||
+      data.delivery.location ||
+      data.delivery.date ||
+      data.delivery.time ||
+      data.notes
+    ) {
+      try {
+        localStorage.setItem("formData", JSON.stringify(data));
+        console.log("تم حفظ البيانات بنجاح");
+      } catch (error) {
+        console.error("حدث خطأ أثناء حفظ البيانات:", error);
+        showToast("حدث خطأ أثناء حفظ البيانات", true);
+      }
+    } else {
+      // If no data to save, remove any existing data
+      localStorage.removeItem("formData");
+    }
+  }
 
   // Initialize the application
   function init() {
@@ -13,6 +144,9 @@ const ReceiptForm = (function () {
     const saveBtn = document.getElementById("saveForm");
     const resetBtn = document.getElementById("resetForm");
     const printBtn = document.getElementById("printForm");
+
+    // Setup auto-save every 5 seconds
+    setInterval(saveFormData, 5000);
 
     // Add header row and first item
     addHeaderRow();
@@ -26,43 +160,43 @@ const ReceiptForm = (function () {
       // Remove any existing click handlers to prevent duplicates
       const newPrintBtn = printBtn.cloneNode(true);
       printBtn.parentNode.replaceChild(newPrintBtn, printBtn);
-      
+
       let printInProgress = false;
-      
+
       newPrintBtn.addEventListener("click", function printHandler(e) {
         e.preventDefault();
         e.stopImmediatePropagation();
-        
+
         if (printInProgress) return;
         printInProgress = true;
-        
+
         // Remove the click handler temporarily
         newPrintBtn.removeEventListener("click", printHandler);
-        
+
         // Set a timeout to re-enable printing after a delay
         const reenablePrint = () => {
           printInProgress = false;
           newPrintBtn.addEventListener("click", printHandler);
         };
-        
+
         // Re-enable after 3 seconds if the print dialog is cancelled
         const timeoutId = setTimeout(reenablePrint, 3000);
-        
+
         // Handle after print completes
         const afterPrint = () => {
           clearTimeout(timeoutId);
           reenablePrint();
-          window.removeEventListener('afterprint', afterPrint);
+          window.removeEventListener("afterprint", afterPrint);
         };
-        
-        window.addEventListener('afterprint', afterPrint, { once: true });
-        
+
+        window.addEventListener("afterprint", afterPrint, { once: true });
+
         // Trigger print
         setTimeout(() => {
           try {
             window.print();
           } catch (err) {
-            console.error('Print error:', err);
+            console.error("Print error:", err);
             reenablePrint();
           }
         }, 100);
@@ -101,18 +235,6 @@ const ReceiptForm = (function () {
 
     // Load saved data if exists
     loadFormData();
-  }
-
-  // Setup all event listeners
-  function setupEventListeners() {
-    // Handle remove item clicks using event delegation
-    if (itemsList) {
-      itemsList.addEventListener("click", function (e) {
-        if (e.target.closest(".remove-item")) {
-          removeItemRow(e.target.closest(".remove-item"));
-        }
-      });
-    }
   }
 
   // Add header row with labels
@@ -185,8 +307,6 @@ const ReceiptForm = (function () {
         >
           <option value="جديدة">جديدة</option>
           <option value="مستعملة">مستعملة</option>
-          <option value="تالفة">تالفة</option>
-          <option value="ناقصة">ناقصة</option>
         </select>
       </div>
       <div class="item-field" data-label="ملاحظات">
@@ -213,94 +333,27 @@ const ReceiptForm = (function () {
 
     itemsList.appendChild(itemRow);
 
-    // Focus on the description input of the newly added row
-    const descInput = document.getElementById(`item-desc-${itemId}`);
-    if (descInput) {
-      descInput.focus();
-    }
+    document.getElementById(`item-desc-${itemId}`).focus();
 
     return itemRow;
-  }
-
-  // Remove an item row
-  function removeItemRow(button) {
-    const row = button.closest(".item-row");
-    if (row && !row.classList.contains("header-row")) {
-      const allRows = document.querySelectorAll(".item-row:not(.header-row)");
-      if (allRows.length > 1) {
-        row.remove();
-      } else {
-        // If it's the last row, just clear the inputs
-        const inputs = row.querySelectorAll("input, select");
-        inputs.forEach((input) => {
-          if (input.type !== "button" && input.type !== "submit") {
-            input.value = "";
-            if (input.type === "select-one") input.selectedIndex = 0;
-          }
-        });
-      }
-    }
   }
 
   // Handle form submission
   function handleFormSubmit(e) {
     if (e) e.preventDefault();
-
-    // Force validation
-    if (receiptForm) {
-      if (!receiptForm.checkValidity()) {
-        receiptForm.classList.add("was-validated");
-        const firstInvalid = receiptForm.querySelector(":invalid");
-        if (firstInvalid) {
-          firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
-          firstInvalid.focus();
-        }
-        return false;
-      }
-    }
-
-    const data = {
-      items: [],
-    };
-
-    // Get all items
-    document.querySelectorAll(".item-row:not(.header-row)").forEach((row) => {
-      const desc = row.querySelector('[name$="[description]"]')?.value;
-      if (desc) {
-        // Only add if there's a description
-        data.items.push({
-          description: desc,
-          quantity: row.querySelector('[name$="[quantity]"]')?.value || "1",
-          condition:
-            row.querySelector('[name$="[condition]"]')?.value || "جديدة",
-          notes: row.querySelector('[name$="[notes]"]')?.value || "",
-        });
-      }
-    });
-
-    // Save to localStorage
-    try {
-      localStorage.setItem("formData", JSON.stringify(data));
-      alert("تم حفظ النموذج بنجاح!");
-    } catch (error) {
-      console.error("Error saving form data:", error);
-      alert("حدث خطأ أثناء حفظ النموذج. يرجى المحاولة مرة أخرى.");
-    }
-
+    saveFormData();
+    showToast("تم حفظ النموذج بنجاح!");
     return false;
   }
 
   // Handle form reset
   function handleFormReset() {
-    if (
-      confirm("هل أنت متأكد من إعادة تعيين النموذج؟ سيتم حذف جميع البيانات.")
-    ) {
-      receiptForm.reset();
-      itemCounter = 1;
-      addHeaderRow();
-      addItemRow();
-      localStorage.removeItem("formData");
-    }
+    receiptForm.reset();
+    itemCounter = 1;
+    addHeaderRow();
+    addItemRow();
+    localStorage.removeItem("formData");
+    showToast("تم إعادة تعيين النموذج بنجاح");
   }
 
   // Load saved form data
@@ -312,6 +365,30 @@ const ReceiptForm = (function () {
       const data = JSON.parse(savedData);
       console.log("Loading saved data:", data);
 
+      // Restore sender information
+      if (data.sender) {
+        setValue("supplierName", data.sender.name || "");
+        setValue("supplierPhone", data.sender.location || "");
+      }
+
+      // Restore receiver information
+      if (data.receiver) {
+        setValue("receiverName", data.receiver.name || "");
+        setValue("receiverDepartment", data.receiver.department || "");
+      }
+
+      // Restore delivery information
+      if (data.delivery) {
+        setValue("deliveryLocation", data.delivery.location || "");
+        setValue("deliveryDate", data.delivery.date || "");
+        setValue("deliveryTime", data.delivery.time || "");
+      }
+
+      // Restore additional notes
+      if (data.notes) {
+        setValue("additionalNotes", data.notes);
+      }
+
       // Restore items
       if (data.items && data.items.length > 0) {
         // Clear existing items
@@ -319,7 +396,7 @@ const ReceiptForm = (function () {
         itemCounter = 0; // Reset counter
 
         // Add items
-        data.items.forEach((item, index) => {
+        data.items.forEach((item) => {
           // Add new row for each item
           const row = addItemRow();
           if (row) {
@@ -334,23 +411,9 @@ const ReceiptForm = (function () {
             setValue(`items[${rowIndex}][notes]`, item.notes || "");
           }
         });
-      }
-
-      // Restore signatures
-      if (data.signatures) {
-        const recSig = document.querySelector('[placeholder="توقيع المستلم"]');
-        const supSig = document.querySelector('[placeholder="توقيع المورد"]');
-        const recDate = document.getElementById("recipient-date");
-        const supDate = document.getElementById("supplier-date");
-
-        if (recSig && data.signatures.recipient) {
-          recSig.value = data.signatures.recipient.name || "";
-          if (recDate) recDate.value = data.signatures.recipient.date || "";
-        }
-        if (supSig && data.signatures.supplier) {
-          supSig.value = data.signatures.supplier.name || "";
-          if (supDate) supDate.value = data.signatures.supplier.date || "";
-        }
+      } else {
+        // If no items, ensure at least one empty row exists
+        addItemRow();
       }
     } catch (error) {
       console.error("Error loading saved data:", error);
