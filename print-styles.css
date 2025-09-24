@@ -249,7 +249,7 @@
   }
 
   /* Page break after 10th item, but only if there are at least 3 items */
-.item-row:nth-child(5)::after {
+.item-row:nth-child(10)::after {
     content: "";
     display: block;
     page-break-after: always;
